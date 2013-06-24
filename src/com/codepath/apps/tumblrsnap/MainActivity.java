@@ -33,25 +33,10 @@ public class MainActivity extends FragmentActivity implements OnLoginHandler {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
 
-        MenuItem addPhoto = menu.findItem(R.id.action_add_photo);
-        addPhoto.setOnMenuItemClickListener(new OnMenuItemClickListener() {
-
-            @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                Intent intent = new Intent(
-                        Intent.ACTION_PICK,
-                        android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 0);
-
-                return true;
-            }
-        });
         MenuItem settings = menu.findItem(R.id.action_settings);
         if (User.currentUser() == null) {
-            addPhoto.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
             settings.setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         } else {
-            addPhoto.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
             settings.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
 

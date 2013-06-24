@@ -7,21 +7,5 @@
         android:orderInCategory="100"
         android:showAsAction="always"
         android:title="@string/action_settings"/>
-    
-    <item
-        android:id="@+id/action_add_photo"
-        android:icon="@android:drawable/ic_menu_camera"
-        android:showAsAction="always"
-        android:orderInCategory="200"
-        android:title="Add Photo">
-        <menu>
-            <item
-                android:id="@+id/action_take_photo"
-                android:title="Take Photo"/>
-            <item
-                android:id="@+id/action_use_existing"
-                android:title="Use Existing"/>
-        </menu>
-    </item>
 
 </menu>
