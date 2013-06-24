@@ -5,13 +5,12 @@
     android:background="#000000"
     tools:context=".PreviewPhotoActivity" >
 
-    <ImageView
-        android:id="@+id/ivPhoto"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+    <android.opengl.GLSurfaceView
+        android:id="@+id/effectsview"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:padding="15dp"
-        android:scaleType="fitStart" />
+        />
 
 </RelativeLayout>
