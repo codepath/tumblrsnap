@@ -1,10 +1,9 @@
 package com.codepath.apps.tumblrsnap;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 import org.scribe.builder.api.Api;
 import org.scribe.builder.api.TumblrApi;
@@ -53,16 +52,14 @@ public class TumblrClient extends OAuthBaseClient {
     	client.post(getApiUrl("blog/timothy1ee.tumblr.com/post"), params, handler);
     }
     
-    public void createPhotoPost(Bitmap bitmap, AsyncHttpResponseHandler handler) {
-    	RequestParams params = new RequestParams();
-    	params.put("api_key", REST_CONSUMER_KEY);
-    	params.put("type", "photo");
-   
+    public void createPhotoPost(Bitmap bitmap, final AsyncHttpResponseHandler handler) {   
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] bytes = stream.toByteArray();
-		params.put("data", bytes.toString());
-	
-		client.post(getApiUrl("blog/timothy1ee.tumblr.com/post"), params, handler);
+        final byte[] bytes = stream.toByteArray();
+        String url = "http://api.tumblr.com/v2/blog/nathan-codepath.tumblr.com/post?api_key=" + REST_CONSUMER_KEY + "&type=photo";
+        RequestParams params = new RequestParams();
+    	params.put("type", "photo");
+    	params.put("data", new ByteArrayInputStream(bytes), "image.png");
+        client.post(url, params, handler);
     }
 }
