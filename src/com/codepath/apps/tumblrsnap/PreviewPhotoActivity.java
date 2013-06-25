@@ -289,6 +289,7 @@ public class PreviewPhotoActivity extends FragmentActivity implements GLSurfaceV
 
 	public void onSaveButton(MenuItem menuItem) {
 		dialog = SimpleProgressDialog.build(this);
+		dialog.show();
 		
 		TumblrClient client = ((TumblrClient) TumblrClient.getInstance(TumblrClient.class, this));
 		client.createPhotoPost(User.currentUser().getBlogHostname(), photoBitmap, new AsyncHttpResponseHandler() {
