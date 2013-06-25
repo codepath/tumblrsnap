@@ -51,8 +51,8 @@ public class PhotosAdapter extends ArrayAdapter<Photo> {
         // finishes downloading.
         RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) ivPhoto
                 .getLayoutParams();
-        lp.height = photo.getPhotoHeight();
-        lp.width = photo.getPhotoWidth();
+        lp.height = 700; // photo.getPhotoHeight() * 2;
+        lp.width = 700; // photo.getPhotoWidth() * 2;
         ivPhoto.setLayoutParams(lp);
 
         ImageLoader.getInstance().displayImage(photo.getPhotoUrl(), ivPhoto);

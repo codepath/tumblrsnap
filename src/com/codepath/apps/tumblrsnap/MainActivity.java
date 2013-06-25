@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MenuItem.OnMenuItemClickListener;
 
 import com.codepath.apps.tumblrsnap.LoginFragment.OnLoginHandler;
 import com.codepath.apps.tumblrsnap.models.User;

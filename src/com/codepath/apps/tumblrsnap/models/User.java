@@ -1,12 +1,25 @@
 package com.codepath.apps.tumblrsnap.models;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import android.util.Log;
 
 import com.codepath.apps.tumblrsnap.TumblrSnapApp;
 
 public class User extends BaseModel {
     private static User currentUser;
+    
+    public String getBlogHostname() {
+    	try {
+	    	JSONArray blogs = getJSONArray("blogs");
+	    	JSONObject blog = (JSONObject)blogs.get(0);
+	    	return blog.getString("name") + ".tumblr.com";
+    	} catch (Exception e) {
+    		return null;
+    	}
+    }
 
     public static void setCurrentUser(User user) {
         currentUser = user;
@@ -25,6 +38,7 @@ public class User extends BaseModel {
             // Attempt to retrieve the current user from shared preferences
             String userJsonString = TumblrSnapApp.getSharedPreferences()
                     .getString("current_user", null);
+            Log.d("DEBUG", "current_user: " + userJsonString);
             if (userJsonString != null) {
                 try {
                     JSONObject jsonObject = new JSONObject(userJsonString);

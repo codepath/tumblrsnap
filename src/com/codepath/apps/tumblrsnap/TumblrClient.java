@@ -29,7 +29,7 @@ public class TumblrClient extends OAuthBaseClient {
 
     public void getTaggedPhotos(AsyncHttpResponseHandler handler) {
         RequestParams params = new RequestParams();
-        params.put("tag", "lol");
+        params.put("tag", "cptumblrsnap");
         params.put("api_key", REST_CONSUMER_KEY);
         client.get(getApiUrl("tagged"), params, handler);
     }
@@ -38,28 +38,28 @@ public class TumblrClient extends OAuthBaseClient {
         client.get(getApiUrl("user/info"), null, handler);
     }
     
-    public void createPhotoPost(File file, AsyncHttpResponseHandler handler) {
+    public void createPhotoPost(String blog, File file, AsyncHttpResponseHandler handler) {
     	RequestParams params = new RequestParams();
-    	params.put("api_key", REST_CONSUMER_KEY);
     	params.put("type", "photo");
-    	
-//    	params.put("source", "http://media.tumblr.com/tumblr_llv2lrbX241qfvlsy.jpg");
-    	try {
+    	params.put("tags", "cptumblrsnap");
+    	try { 
 			params.put("data", file);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-    	client.post(getApiUrl("blog/timothy1ee.tumblr.com/post"), params, handler);
+    	client.post(getApiUrl(String.format("blog/%s/post?type=photo&tags=cptumblrsnap", blog)), params, handler);
     }
-    
-    public void createPhotoPost(Bitmap bitmap, final AsyncHttpResponseHandler handler) {   
+      
+    public void createPhotoPost(String blog, Bitmap bitmap, final AsyncHttpResponseHandler handler) {   
+        RequestParams params = new RequestParams();
+    	params.put("type", "photo");
+    	params.put("tags", "cptumblrsnap");
+    	
 		ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         final byte[] bytes = stream.toByteArray();
-        String url = "http://api.tumblr.com/v2/blog/nathan-codepath.tumblr.com/post?api_key=" + REST_CONSUMER_KEY + "&type=photo";
-        RequestParams params = new RequestParams();
-    	params.put("type", "photo");
     	params.put("data", new ByteArrayInputStream(bytes), "image.png");
-        client.post(url, params, handler);
+    	
+    	client.post(getApiUrl(String.format("blog/%s/post?type=photo&tags=cptumblrsnap", blog)), params, handler);
     }
 }

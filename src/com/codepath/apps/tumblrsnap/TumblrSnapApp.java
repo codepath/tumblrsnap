@@ -38,7 +38,7 @@ public class TumblrSnapApp extends Application {
         // configuration
         DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
                 .cacheInMemory().cacheOnDisc()
-                .imageScaleType(ImageScaleType.NONE)
+                .imageScaleType(ImageScaleType.EXACTLY_STRETCHED)
                 .displayer(new FadeInBitmapDisplayer(300)).build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(
                 getApplicationContext()).defaultDisplayImageOptions(
