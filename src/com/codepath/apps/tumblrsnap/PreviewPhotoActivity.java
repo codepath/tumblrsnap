@@ -1,34 +1,26 @@
 package com.codepath.apps.tumblrsnap;
 
-import java.io.File;
-import java.io.IOException;
+import javax.microedition.khronos.egl.EGLConfig;
+import javax.microedition.khronos.opengles.GL10;
 
 import org.scribe.builder.api.TumblrApi;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.widget.ImageView;
-
-import com.tumblr.jumblr.JumblrClient;
-import com.tumblr.jumblr.types.PhotoPost;
-
 import android.graphics.Color;
-import android.view.MenuInflater;
-
 import android.media.effect.Effect;
 import android.media.effect.EffectContext;
 import android.media.effect.EffectFactory;
-
 import android.opengl.GLES20;
 import android.opengl.GLSurfaceView;
 import android.opengl.GLUtils;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import javax.microedition.khronos.egl.EGLConfig;
-import javax.microedition.khronos.opengles.GL10;
+import com.loopj.android.http.AsyncHttpResponseHandler;
 
 public class PreviewPhotoActivity extends Activity implements GLSurfaceView.Renderer {
 	private String photoUri;
@@ -301,54 +293,21 @@ public class PreviewPhotoActivity extends Activity implements GLSurfaceView.Rend
 	public void onSaveButton(MenuItem menuItem) {
 				String requestToken = getSharedPreferences("OAuth_" + TumblrApi.class.getSimpleName() + "_" + TumblrClient.REST_CONSUMER_KEY, 0).getString("request_token", "");
 				String requestTokenSecret = getSharedPreferences("OAuth_" + TumblrApi.class.getSimpleName() + "_" + TumblrClient.REST_CONSUMER_KEY, 0).getString("request_token_secret", "");
-				JumblrClient jumblr = new JumblrClient(TumblrClient.REST_CONSUMER_KEY, TumblrClient.REST_CONSUMER_SECRET, requestToken, requestTokenSecret);
-				try {
-					PhotoPost photoPost = jumblr.newPost("timothy1ee.tumblr.com", PhotoPost.class);
-					photoPost.setData(new File(photoUri));
-					photoPost.save(); 
-				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-
-		//		TumblrClient client = ((TumblrClient) TumblrClient.getInstance(
-		//				TumblrClient.class, this));
-		//		File file = new File(photoUri);
-		//		client.createPhotoPost(file, new AsyncHttpResponseHandler() {
-		//			@Override
-		//			public void onSuccess(int arg0, String arg1) {
-		//				// TODO Auto-generated method stub
-		//				super.onSuccess(arg0, arg1);
-		//			}
-		//			
-		//			@Override
-		//			public void onFailure(Throwable arg0, String arg1) {
-		//				Log.d("DEBUG", arg0.toString());
-		//				Log.d("DEBUG", arg1);
-		//			}
-		//		});
-
-//		TumblrClient client = ((TumblrClient) TumblrClient.getInstance(
-//				TumblrClient.class, this));
-//		client.createPhotoPost(photoBitmap, new AsyncHttpResponseHandler() {
-//			@Override
-//			public void onSuccess(int arg0, String arg1) {
-//				// TODO Auto-generated method stub
-//				super.onSuccess(arg0, arg1);
-//			}
-//
-//			@Override
-//			public void onFailure(Throwable arg0, String arg1) {
-//				Log.d("DEBUG", arg0.toString());
-//				Log.d("DEBUG", arg1);
-//			}
-//		});
+				
+				TumblrClient client = ((TumblrClient) TumblrClient.getInstance(TumblrClient.class, this));
+				client.createPhotoPost(photoBitmap, new AsyncHttpResponseHandler() {
+					@Override
+					public void onSuccess(int arg0, String arg1) {
+						Log.d("DEBUG", String.valueOf(arg0));
+						Log.d("DEBUG", arg1);
+						PreviewPhotoActivity.this.finish();
+					}
+					
+					@Override
+					public void onFailure(Throwable arg0, String arg1) {
+						Log.d("DEBUG", arg0.toString());
+						Log.d("DEBUG", arg1);
+					}
+				});
 	}
 }
