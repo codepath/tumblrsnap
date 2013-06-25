@@ -3,7 +3,6 @@ package com.codepath.apps.tumblrsnap;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.media.effect.Effect;
