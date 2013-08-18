@@ -30,6 +30,7 @@ public class TumblrClient extends OAuthBaseClient {
     public void getTaggedPhotos(AsyncHttpResponseHandler handler) {
         RequestParams params = new RequestParams();
         params.put("tag", "cptumblrsnap");
+        params.put("limit", "20");
         params.put("api_key", REST_CONSUMER_KEY);
         client.get(getApiUrl("tagged"), params, handler);
     }

@@ -1,11 +1,13 @@
-package com.codepath.apps.tumblrsnap;
-
-import com.codepath.apps.tumblrsnap.models.User;
+package com.codepath.apps.tumblrsnap.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+
+import com.codepath.apps.tumblrsnap.R;
+import com.codepath.apps.tumblrsnap.TumblrSnapApp;
+import com.codepath.apps.tumblrsnap.models.User;
 
 public class SettingsActivity extends Activity {
 

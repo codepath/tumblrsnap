@@ -1,4 +1,4 @@
-package com.codepath.apps.tumblrsnap;
+package com.codepath.apps.tumblrsnap.fragments;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,6 +12,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.codepath.apps.tumblrsnap.R;
+import com.codepath.apps.tumblrsnap.TumblrClient;
 import com.codepath.apps.tumblrsnap.models.User;
 import com.codepath.oauth.OAuthLoginFragment;
 import com.loopj.android.http.JsonHttpResponseHandler;

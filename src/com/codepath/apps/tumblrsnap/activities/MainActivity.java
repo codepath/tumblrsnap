@@ -1,4 +1,4 @@
-package com.codepath.apps.tumblrsnap;
+package com.codepath.apps.tumblrsnap.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,7 +9,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.codepath.apps.tumblrsnap.LoginFragment.OnLoginHandler;
+import com.codepath.apps.tumblrsnap.R;
+import com.codepath.apps.tumblrsnap.fragments.LoginFragment;
+import com.codepath.apps.tumblrsnap.fragments.LoginFragment.OnLoginHandler;
+import com.codepath.apps.tumblrsnap.fragments.PhotosFragment;
 import com.codepath.apps.tumblrsnap.models.User;
 
 public class MainActivity extends FragmentActivity implements OnLoginHandler {

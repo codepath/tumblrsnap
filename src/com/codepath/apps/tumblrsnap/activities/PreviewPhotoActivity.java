@@ -1,4 +1,4 @@
-package com.codepath.apps.tumblrsnap;
+package com.codepath.apps.tumblrsnap.activities;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -17,6 +17,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.codepath.apps.tumblrsnap.GLToolbox;
+import com.codepath.apps.tumblrsnap.R;
+import com.codepath.apps.tumblrsnap.TextureRenderer;
+import com.codepath.apps.tumblrsnap.TumblrClient;
 import com.codepath.apps.tumblrsnap.models.User;
 import com.codepath.libraries.androidviewhelpers.SimpleProgressDialog;
 import com.loopj.android.http.AsyncHttpResponseHandler;

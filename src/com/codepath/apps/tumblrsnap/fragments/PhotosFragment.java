@@ -1,9 +1,10 @@
-package com.codepath.apps.tumblrsnap;
+package com.codepath.apps.tumblrsnap.fragments;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +28,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.codepath.apps.tumblrsnap.PhotosAdapter;
+import com.codepath.apps.tumblrsnap.R;
+import com.codepath.apps.tumblrsnap.TumblrClient;
+import com.codepath.apps.tumblrsnap.activities.PreviewPhotoActivity;
 import com.codepath.apps.tumblrsnap.models.Photo;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -177,7 +182,7 @@ public class PhotosFragment extends Fragment {
 	    }
 
 	    // Create a media file name
-	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(new Date());
 	    File mediaFile = new File(mediaStorageDir.getPath() + File.separator +
 		        "IMG_"+ timeStamp + ".jpg");
 

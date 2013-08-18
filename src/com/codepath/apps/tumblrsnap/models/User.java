@@ -8,12 +8,13 @@ import android.util.Log;
 
 import com.codepath.apps.tumblrsnap.TumblrSnapApp;
 
-public class User extends BaseModel {
+public class User {
     private static User currentUser;
+    protected JSONObject jsonObject;
     
     public String getBlogHostname() {
     	try {
-	    	JSONArray blogs = getJSONArray("blogs");
+	    	JSONArray blogs = jsonObject.getJSONArray("blogs");
 	    	JSONObject blog = (JSONObject)blogs.get(0);
 	    	return blog.getString("name") + ".tumblr.com";
     	} catch (Exception e) {
@@ -29,7 +30,7 @@ public class User extends BaseModel {
                     .commit();
         } else {
             TumblrSnapApp.getSharedPreferences().edit()
-                    .putString("current_user", user.getJSONString()).commit();
+                    .putString("current_user", user.jsonObject.toString()).commit();
         }
     }
 

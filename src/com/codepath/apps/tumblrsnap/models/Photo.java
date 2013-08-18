@@ -6,28 +6,34 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class Photo extends BaseModel {
-
-    public String getId() {
-        return getString("id");
-    }
-
-    public String getBlogName() {
-        return getString("blog_name");
-    }
-
-    public long getTimestamp() {
-        return getLong("timestamp");
-    }
+public class Photo {
+	private String id;
+	private String blogName;
+	private long timestamp;
+	private String caption;
+	private JSONArray photoArray;
+	
+	public String getId() {
+		return id;
+	}
+	
+	public String getBlogName() {
+		return blogName;
+	}
+	
+	public long getTimestamp() {
+		return timestamp;
+	}
+	
+	public String getCaption() {
+		return caption;
+	}
+	
 
     public String getAvatarUrl() {
         return String.format(
                 "http://api.tumblr.com/v2/blog/%s.tumblr.com/avatar/64",
-                getBlogName());
-    }
-
-    public String getCaption() {
-        return getString("caption");
+                blogName);
     }
 
     public String getPhotoUrl() {
@@ -56,7 +62,7 @@ public class Photo extends BaseModel {
 
     private JSONObject getPhotoMeta() {
         try {
-            JSONArray altSizes = ((JSONObject) getJSONArray("photos").get(0))
+            JSONArray altSizes = ((JSONObject) photoArray.get(0))
                     .getJSONArray("alt_sizes");
             for (int i = 0; i < altSizes.length(); i++) {
                 JSONObject altSize = (JSONObject) altSizes.get(i);
@@ -74,7 +80,15 @@ public class Photo extends BaseModel {
 
     public static Photo fromJson(JSONObject jsonObject) {
         Photo photo = new Photo();
-        photo.jsonObject = jsonObject;
+        try {
+			photo.id = jsonObject.getString("id");
+			photo.blogName = jsonObject.getString("blog_name");
+			photo.timestamp = jsonObject.getLong("timestamp");
+			photo.caption = jsonObject.getString("caption");
+			photo.photoArray = jsonObject.getJSONArray("photos");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
         return photo;
     }
 
