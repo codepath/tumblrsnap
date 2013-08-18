@@ -44,12 +44,6 @@ public class PhotosFragment extends Fragment {
 	private String photoUri;
 	private Bitmap photoBitmap;
 	
-	@Override
-	public void onHiddenChanged(boolean hidden) {
-		Log.d("DEBUG", "hello");
-		super.onHiddenChanged(hidden);
-	}
-	
 	@Override 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
