@@ -5,9 +5,10 @@
     android:background="#000000"
     tools:context=".PreviewPhotoActivity" >
 
-    <android.opengl.GLSurfaceView
-        android:id="@+id/effectsview"
+    <ImageView
+        android:id="@+id/ivPreview"
         android:layout_width="300dp"
+        android:contentDescription="Image Preview"
         android:layout_height="300dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
