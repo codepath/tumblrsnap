@@ -34,6 +34,14 @@ public class TumblrClient extends OAuthBaseClient {
         params.put("api_key", REST_CONSUMER_KEY);
         client.get(getApiUrl("tagged"), params, handler);
     }
+    
+    public void getUserPhotos(AsyncHttpResponseHandler handler) {
+    	RequestParams params = new RequestParams();
+        params.put("type", "photo");
+        params.put("limit", "20");
+        params.put("api_key", REST_CONSUMER_KEY);
+        client.get(getApiUrl("user/dashboard"), params, handler);
+    }
 
     public void getUserInfo(AsyncHttpResponseHandler handler) {
         client.get(getApiUrl("user/info"), null, handler);

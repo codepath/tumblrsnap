@@ -3,6 +3,7 @@ package com.codepath.apps.tumblrsnap.fragments;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 
@@ -44,26 +45,41 @@ public class PhotosFragment extends Fragment {
 	private String photoUri;
 	private Bitmap photoBitmap;
 	
+	TumblrClient client;
+	ArrayList<Photo> photos;
+	PhotosAdapter photosAdapter;
+	ListView lvPhotos;
+	
 	@Override 
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View view = inflater.inflate(R.layout.fragment_photos, container, false);
-		
 		setHasOptionsMenu(true);
 		return view;
 	}
 	
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		client = ((TumblrClient) TumblrClient.getInstance(
+				TumblrClient.class, getActivity()));
+		photos = new ArrayList<Photo>();
+		photosAdapter = new PhotosAdapter(getActivity(), photos);
+		lvPhotos = (ListView) getView().findViewById(R.id.lvPhotos);
+		lvPhotos.setAdapter(photosAdapter);
+	}
+	
 	@Override
 	public void onResume() {
-		reload();
 		super.onResume();
+		reloadPhotos();
 	}
 
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.photos, menu);
-
 		super.onCreateOptionsMenu(menu, inflater);
+		inflater.inflate(R.menu.photos, menu);
 	}
 
 	@Override
@@ -100,25 +116,20 @@ public class PhotosFragment extends Fragment {
 				photoBitmap = data.getParcelableExtra("data");
 				startPreviewPhotoActivity();
 			} else if (requestCode == POST_PHOTO_CODE) {
-				reload();
+				reloadPhotos();
 			}
 		}
 	}
 	
-	private void reload() {
-		TumblrClient client = ((TumblrClient) TumblrClient.getInstance(
-				TumblrClient.class, getActivity()));
+	private void reloadPhotos() {
 		client.getTaggedPhotos(new JsonHttpResponseHandler() {
 			@Override
 			public void onSuccess(int code, JSONObject response) {
 				try {
 					JSONArray photosJson = response.getJSONArray("response");
-					ArrayList<Photo> photos = Photo.fromJson(photosJson);
-					PhotosAdapter adapter = new PhotosAdapter(getActivity(),
-							photos);
-					ListView lvPhotos = (ListView) getActivity().findViewById(
-							R.id.lvPhotos);
-					lvPhotos.setAdapter(adapter);
+					photosAdapter.clear();
+					photosAdapter.addAll(Photo.fromJson(photosJson));
+					mergeUserPhotos(); // bring in user photos
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -181,5 +192,34 @@ public class PhotosFragment extends Fragment {
 		        "IMG_"+ timeStamp + ".jpg");
 
 	    return mediaFile;
+	}
+	
+	// Loads feed of users photos and merges them with the tagged photos
+	// Used to avoid an API limitation where user photos arent returned in tagged
+	private void mergeUserPhotos() {
+		client.getUserPhotos(new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int code, JSONObject response) {
+				try {
+					JSONArray photosJson = response.getJSONObject("response").getJSONArray("posts");
+					for (Photo p : Photo.fromJson(photosJson)) {
+						if (p.isSnap()) { photosAdapter.add(p); }
+					}
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				photosAdapter.sort(new Comparator<Photo>() {
+					@Override
+					public int compare(Photo a, Photo b) {
+						return Long.valueOf(b.getTimestamp()).compareTo(a.getTimestamp());
+					}
+				});
+			}
+
+			@Override
+			public void onFailure(Throwable arg0) {
+				Log.d("DEBUG", arg0.toString());
+			}
+		});
 	}
 }
