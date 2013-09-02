@@ -11,6 +11,7 @@ public class Photo {
 	private String blogName;
 	private long timestamp;
 	private String caption;
+	private JSONArray tagsArray;
 	private JSONArray photoArray;
 	
 	public String getId() {
@@ -28,7 +29,18 @@ public class Photo {
 	public String getCaption() {
 		return caption;
 	}
-	
+
+	public boolean isSnap() {
+		boolean isSnap = false;
+		for (int i = 0; i < tagsArray.length(); i++) {
+			try {
+				if (tagsArray.getString(i).equals("cptumblrsnap")) { isSnap = true; }
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		return isSnap;
+	}
 
     public String getAvatarUrl() {
         return String.format(
@@ -86,6 +98,7 @@ public class Photo {
 			photo.timestamp = jsonObject.getLong("timestamp");
 			photo.caption = jsonObject.getString("caption");
 			photo.photoArray = jsonObject.getJSONArray("photos");
+			photo.tagsArray = jsonObject.getJSONArray("tags");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
