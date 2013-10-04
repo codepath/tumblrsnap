@@ -17,6 +17,22 @@ Built tumblrsnap as a part of the [Android CodePath Bootcamp](http://thecodepath
 
 * [Apache Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
 
+## Building
+
+The build requires [Gradle](http://www.gradleware.com/)
+v1.6 and the [Android SDK](http://developer.android.com/sdk/index.html)
+to be installed in your development environment. In addition you'll need to set
+the `ANDROID_HOME` environment variable to the location of your SDK:
+
+    export ANDROID_HOME=/opt/tools/android-sdk
+
+After satisfying those requirements, the build is pretty simple:
+
+* Run `gradle assemble` from the root directory to build the APK only
+* Run `gradle build` from the root directory to build the app and also run
+  the integration tests, this requires a connected Android device or running
+  emulator.
+
 ## Acknowledgements
 
 This project uses the [v2 Tumblr API](http://www.tumblr.com/docs/en/api/v2) in order to manage all the images.
