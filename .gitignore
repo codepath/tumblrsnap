@@ -20,3 +20,8 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+# Android Studio project files
+*.iml
+.idea
+import-summary.txt
