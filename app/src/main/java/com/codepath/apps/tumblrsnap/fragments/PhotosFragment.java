@@ -42,7 +42,7 @@ public class PhotosFragment extends Fragment {
 	private static final int CROP_PHOTO_CODE = 3;
 	private static final int POST_PHOTO_CODE = 4;
 	
-	private String photoUri;
+	private Uri photoUri;
 	private Bitmap photoBitmap;
 	
 	TumblrClient client;
