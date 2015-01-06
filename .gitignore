@@ -23,5 +23,7 @@ local.properties
 
 # Android Studio project files
 *.iml
-.idea
+.gradle/**
+.idea/**
+build/**
 import-summary.txt
